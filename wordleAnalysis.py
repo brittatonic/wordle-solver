@@ -59,5 +59,5 @@ plt.yticks(range(2,7))
 plt.xlabel('Time [sec]')
 plt.ylabel('Number of Guesses')
 plt.title('Number of Guesses vs. Time')
-# plt.show()
+plt.show()
 
