@@ -47,7 +47,6 @@ def removePluralWords(words):
 # Make sure solver only picks legal words
 def addWordConstraints(solver, words, vars):
     disjunction = []
-
     for word in words:
         conjuntion = z3.And([vars[index] == LETTER_TO_INDEX[letter] for index, letter in enumerate(word)])
         disjunction.append(conjuntion)
@@ -68,6 +67,7 @@ def letterNotInSolution(solver, vars, letter):
         solver.add(var != LETTER_TO_INDEX[letter])
     return solver
 
+# Yellow box in guess
 def letterInWrongSpot(solver, vars, letter, position):
     solver.add(vars[position] != LETTER_TO_INDEX[letter])
     solver.add(z3.Or([var == LETTER_TO_INDEX[letter] for var in vars]))
@@ -126,6 +126,7 @@ if __name__ == "__main__":
         startGuessTime = time.time()
         for jj in range(NUM_GUESSES):
             result = solver.check()
+            assert result == z3.sat
 
             model = solver.model()
             guess = printSolution(model, vars)
@@ -149,15 +150,15 @@ if __name__ == "__main__":
                     wordleIdxs = findAllIndexes(wordle, letter)
                     guessIdxs = findAllIndexes(guess, letter)
                     if (len(wordleIdxs) > 1):
-                        checkWhichIndexs = set(wordleIdxs) & set(guessIdxs)
+                        checkWhichIndexes = set(wordleIdxs) & set(guessIdxs)
                         # pdb.set_trace()
-                        if (len(checkWhichIndexs) == 0):
+                        if (len(checkWhichIndexes) == 0):
                             solver = letterInWrongSpot(solver, vars, letter, idx)
-                        elif (len(checkWhichIndexs) > 1): 
-                            for value in checkWhichIndexs:
+                        elif (len(checkWhichIndexes) > 1): 
+                            for value in checkWhichIndexes:
                                 solver = letterInCorrectSpot(solver, vars, letter, value)
-                        elif (len(checkWhichIndexs) == 1):
-                            goodIdx = checkWhichIndexs.pop()
+                        elif (len(checkWhichIndexes) == 1):
+                            goodIdx = checkWhichIndexes.pop()
                             for badIdx in guessIdxs:
                                 if (badIdx != goodIdx):
                                     continue
