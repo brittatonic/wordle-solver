@@ -1,11 +1,7 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 data = pd.read_table('WordleSolver2.csv', sep=',')
-
-# print(data.head)
-# print(data['Guesses'])
 
 plt.figure()
 plt.hist(data['Guesses'], bins=[2,3,4,5,6,7], range=[2,7], align='left', color='pink', edgecolor='black')
@@ -29,8 +25,14 @@ plt.xlabel('Guessed the Correct Word')
 plt.ylabel('Occurences')
 plt.title('Guesses Matching Solution')
 
-totalTimeGuessing = sum(data['Time'])
+time = data['Time']
+time.drop(time.tail(1).index, inplace=True)
+totalTimeGuessing = sum(time)
+print('Total Time Guessing: ', totalTimeGuessing)
 totalTime = data['TotalTime'].iloc[-1]
+print('Total Time Running Program: ', totalTime)
+averageTimePerSolve = totalTime/len(data)
+print('Average Time per Solve: ', averageTimePerSolve)
 
 sixGuesses = data[data['Guesses'] == 6]
 fiveGuesses = data[data['Guesses'] == 5]
