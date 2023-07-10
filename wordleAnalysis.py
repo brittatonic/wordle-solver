@@ -9,6 +9,7 @@ plt.xticks(range(2,7))
 plt.xlabel('Number of Guesses')
 plt.ylabel('Occurences')
 plt.title('Guesses For All Wordle Solutions')
+plt.savefig('AllGuesses.png')
 
 solved = data[data['Matching'] == True]
 print(len(data) - len(solved))
@@ -18,6 +19,7 @@ plt.xticks(range(2,7))
 plt.xlabel('Number of Guesses')
 plt.ylabel('Occurences')
 plt.title('Guesses For Solved Wordle Solutions')
+plt.savefig('CorrectGuesses.png')
 
 plt.figure()
 plt.hist(data['Matching'], bins=[0,1,2], range=[0,1,2], align='left', color='blue', edgecolor='black')
@@ -25,6 +27,7 @@ plt.xticks(range(0,2), ['False', 'True'])
 plt.xlabel('Guessed the Correct Word')
 plt.ylabel('Occurences')
 plt.title('Guesses Matching Solution')
+plt.savefig('Matches.png')
 
 time = data['Time']
 time.drop(time.tail(1).index, inplace=True)
@@ -59,5 +62,7 @@ plt.yticks(range(2,7))
 plt.xlabel('Time [sec]')
 plt.ylabel('Number of Guesses')
 plt.title('Number of Guesses vs. Time')
-plt.show()
+plt.savefig('GuessVsTime.png')
+# plt.show()
+
 
