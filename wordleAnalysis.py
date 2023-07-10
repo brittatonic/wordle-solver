@@ -63,6 +63,6 @@ plt.xlabel('Time [sec]')
 plt.ylabel('Number of Guesses')
 plt.title('Number of Guesses vs. Time')
 plt.savefig('GuessVsTime.png')
-# plt.show()
+plt.show()
 
 
